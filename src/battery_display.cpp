@@ -8,17 +8,20 @@ int main(int argc, char** argv)
 
     ROS_INFO_STREAM("Battery Display Node Started");
 
-    SetTraceLogLevel(LOG_NONE);
-    InitWindow(100, 100, "Battery Display");
+    //SetTraceLogLevel(LOG_NONE);
+    InitWindow(800, 600, "Battery Display");
 
     int display = GetCurrentMonitor();
     int screenWidth = GetMonitorWidth(display);
     int screenHeight = GetMonitorHeight(display);
 
+    ROS_INFO_STREAM("setting window size to (" << screenWidth << "x" << screenHeight << ")");
     SetWindowSize(screenWidth, screenHeight);
 
-    SetTargetFPS(10);               // Set our game to run at 60 frames-per-second
+    ros::Duration(1.0).sleep();
+
     ToggleFullscreen();
+    SetTargetFPS(10);               // Set our game to run at 60 frames-per-second
 
     while (!WindowShouldClose() && ros::ok())    // Detect window close button or ESC key
     {
