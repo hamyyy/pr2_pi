@@ -18,9 +18,8 @@ def home(path):
 
 
 def main():
-    os.system("midori -e Fullscreen http://127.0.0.1:5000/ &")
-    #webbrowser.open_new('http://127.0.0.1:5000/')
-    app.run(host="127.0.0.1", port=5000)
+    os.system("midori -e Fullscreen http://localhost:5750/ &")
+    app.run(host="localhost", port=5750)
     os.system("pkill midori")
 
 
