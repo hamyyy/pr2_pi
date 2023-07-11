@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 
 from flask import Flask, send_from_directory
-import random
+import webbrowser
 
 app = Flask(__name__)
 
-# Path for our main Svelte page
+
 @app.route("/")
 def base():
-    return send_from_directory('dist', 'index.html')
+    return send_from_directory('../dist', 'index.html')
 
-# Path for all the static files (compiled JS/CSS, etc.)
+
 @app.route("/<path:path>")
 def home(path):
-    return send_from_directory('dist', path)
+    return send_from_directory('../dist', path)
 
 
-@app.route("/rand")
-def hello():
-    return str(random.randint(0, 100))
+def main():
+    webbrowser.open_new('http://127.0.0.1:5000/')
+    app.run(host="127.0.0.1", port=5000)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    main()
