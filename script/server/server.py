@@ -17,7 +17,7 @@ def home(path):
 
 
 def main():
-    webbrowser.get("chromium --kisok").open_new('http://127.0.0.1:5000/')
+    webbrowser.open_new('http://127.0.0.1:5000/')
     app.run(host="127.0.0.1", port=5000)
 
 
