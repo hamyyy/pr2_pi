@@ -38,6 +38,7 @@ def main():
 
     sub = rospy.Subscriber("/battery/server2", BatteryServer2, on_battery_msg)
 
+    os.system("pkill midori")
     os.system("midori -e Fullscreen http://localhost:5750/ &")
     app.run(host="localhost", port=5750)
     os.system("pkill midori")
