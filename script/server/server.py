@@ -2,7 +2,7 @@
 
 import os
 from flask import Flask, send_from_directory
-import webbrowser
+import random
 
 app = Flask(__name__)
 
@@ -15,6 +15,10 @@ def base():
 @app.route("/<path:path>")
 def home(path):
     return send_from_directory('../dist', path)
+
+@app.route("/charge")
+def charge():
+    return random.randint(0, 100)
 
 
 def main():
