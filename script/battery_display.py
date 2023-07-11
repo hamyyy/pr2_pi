@@ -7,12 +7,13 @@ from pr2_msgs.msg import BatteryServer2
 
 charge = [0] * 4
 
-sg.theme('DarkAmber')
+#sg.theme('DarkAmber')
+sg.theme('DarkBlue15')
 layout = [  [sg.Text('Some text on Row 1')],
             [sg.Text('Enter something on Row 2'), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancel')] ]
 
-window = sg.Window('Window Title', layout, no_titlebar=True)
+window = sg.Window('Window Title', layout, no_titlebar=True, size=(800, 480))
 
 def on_battery_msg(msg: BatteryServer2):
   charge[msg.id - 1] = msg.average_charge
