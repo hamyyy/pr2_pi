@@ -1,47 +1,85 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import BatteryCharging from "/battery-charging.svg";
+  import BatteryFull from "/battery-full.svg";
+  import BatteryDead from "/battery-dead.svg";
+  import BatteryHalf from "/battery-half.svg";
+  import { onDestroy, onMount } from "svelte";
+
+  let batteryCharge = -1;
+  let batteries = [];
+
+  function updateCharge() {
+    fetch("/battery-charge")
+      .then((response) => response.json())
+      .then((data) => {
+        batteryCharge = data.average_charge ?? -1;
+        batteries = data.battery ?? [];
+        // console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  let intervalID = 0;
+  onMount(() => {
+    intervalID = setInterval(() => {
+      updateCharge();
+    }, 1000);
+  });
+
+  onDestroy(() => {
+    clearInterval(intervalID);
+  });
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+  {#each batteries as batt}
+    <div class="battery-container">
+      <div class="battery-percentage">
+        {batteryCharge}%
+      </div>
 
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+      <div>
+        <img class="battery" src={batt.charging ? BatteryCharging : batteryCharge > 95 ? BatteryFull : batt.discharging ? BatteryHalf : BatteryDead} alt="" />
+      </div>
+      <!-- <img class="battery" src={BatteryFull} alt="" />
+    <img class="battery" src={BatteryDead} alt="" />
+    <img class="battery" src={BatteryHalf} alt="" /> -->
+    </div>
+  {/each}
 </main>
 
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+<style lang="scss">
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  .battery-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  .battery {
+    width: 3rem;
+    margin: 0 auto;
   }
-  .read-the-docs {
-    color: #888;
+
+  .battery-percentage {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .battery {
+      filter: invert(1);
+    }
   }
 </style>
