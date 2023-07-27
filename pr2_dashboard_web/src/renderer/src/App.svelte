@@ -1,39 +1,25 @@
 <script lang="ts">
-  import BatteryCharging from "/battery-charging.svg";
-  import BatteryFull from "/battery-full.svg";
-  import BatteryDead from "/battery-dead.svg";
-  import BatteryHalf from "/battery-half.svg";
-  import { onDestroy, onMount } from "svelte";
+  import BatteryCharging from '/battery-charging.svg'
+  import BatteryFull from '/battery-full.svg'
+  import BatteryDead from '/battery-dead.svg'
+  import BatteryHalf from '/battery-half.svg'
+  import { onDestroy, onMount } from 'svelte'
+  import { setup_ros, shutdown_ros, batteryInfo } from './stores/ros.store'
 
-  let batteryCharge = -1;
-  let batteries = [];
+  $: batteryCharge = $batteryInfo.averageCharge ?? -1
+  $: batteries = $batteryInfo.battery ?? []
 
-  function updateCharge() {
-    fetch("/battery-charge")
-      .then((response) => response.json())
-      .then((data) => {
-        batteryCharge = data.average_charge ?? -1;
-        batteries = data.battery ?? [];
-        // console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  let intervalID = 0;
   onMount(() => {
-    intervalID = setInterval(() => {
-      updateCharge();
-    }, 1000);
-  });
+    setup_ros()
+  })
 
   onDestroy(() => {
-    clearInterval(intervalID);
-  });
+    shutdown_ros()
+  })
 </script>
 
 <main>
+  <div>Battery Monitor</div>
   {#each batteries as batt}
     <div class="battery-container">
       <div class="battery-percentage">
@@ -41,7 +27,17 @@
       </div>
 
       <div>
-        <img class="battery" src={batt.charging ? BatteryCharging : batteryCharge > 95 ? BatteryFull : batt.discharging ? BatteryHalf : BatteryDead} alt="" />
+        <img
+          class="battery"
+          src={batt.charging
+            ? BatteryCharging
+            : batteryCharge > 95
+            ? BatteryFull
+            : batteryCharge > 10
+            ? BatteryHalf
+            : BatteryDead}
+          alt=""
+        />
       </div>
       <!-- <img class="battery" src={BatteryFull} alt="" />
     <img class="battery" src={BatteryDead} alt="" />
