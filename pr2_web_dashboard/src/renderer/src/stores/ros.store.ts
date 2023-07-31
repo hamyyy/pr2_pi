@@ -2,6 +2,8 @@ import type rosnodejs from 'rosnodejs'
 import type * as Shell from 'child_process'
 import { writable } from 'svelte/store'
 
+let shutdownCalledInternally = false;
+
 export const batteryInfo = writable<any[]>([{}, {}, {}, {}])
 export const rosInfo = writable({
   running: false,
@@ -10,6 +12,7 @@ export const rosInfo = writable({
 
 const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
+const ipcRenderer: Electron.IpcRenderer = (window as any).api.ipcRenderer
 
 export function setup_ros(): void {
   ros.initNode('/pr2_web_dashboard')
@@ -43,8 +46,16 @@ export function setup_ros(): void {
     })
   });
 
+  const id = setInterval(() => {
+    if (nh.isShutdown() && !shutdownCalledInternally) {
+      clearInterval(id);
+      ipcRenderer.send('shutdown')
+    }
+  }, 1000)
+
 }
 
 export function shutdown_ros(): void {
+  shutdownCalledInternally = true
   ros.shutdown()
 }

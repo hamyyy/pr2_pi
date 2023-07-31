@@ -1,4 +1,4 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import ros from 'rosnodejs'
 import * as shell from 'child_process'
@@ -7,6 +7,7 @@ import * as shell from 'child_process'
 const api = {
   ros,
   shell,
+  ipcRenderer
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
