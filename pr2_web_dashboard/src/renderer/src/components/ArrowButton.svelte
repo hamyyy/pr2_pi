@@ -23,6 +23,7 @@
 
   img {
     width: 3rem;
+    pointer-events: none;
 
     &.disabled {
       filter: opacity(0.5);
