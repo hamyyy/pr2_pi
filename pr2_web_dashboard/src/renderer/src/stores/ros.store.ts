@@ -14,8 +14,8 @@ const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
 const ipcRenderer: Electron.IpcRenderer = (window as any).api.ipcRenderer
 
-export function setup_ros(): void {
-  ros.initNode('/pr2_web_dashboard')
+export async function setup_ros(): void {
+  await ros.initNode('/pr2_web_dashboard')
   const nh = ros.nodeHandle
 
   nh.subscribe('/battery/server2', 'pr2_msgs/BatteryServer2', (msg: any) => {
