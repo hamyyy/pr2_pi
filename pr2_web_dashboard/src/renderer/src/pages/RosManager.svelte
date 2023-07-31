@@ -10,7 +10,7 @@
         running: false,
         teleop: false
       })
-      shell.exec(`expect -c 'spawn ssh pr2@10.68.0.1 "pkill ros"; interact'`)
+      shell.exec(`ssh pr2@10.68.0.1 "pkill ros"`)
     } else {
       shell.exec(
         `ssh pr2@10.68.0.1 "source /opt/ros/noetic/setup.bash && source /home/pr2/pr2_ws/devel/setup.bash && export ROS_ENV_LOADER=/opt/ros/noetic/env.sh && roslaunch ~/pr2_bringup.launch"`
