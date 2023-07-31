@@ -25,9 +25,11 @@ export async function setup_ros(): Promise<void> {
     })
   })
 
-  shell.exec('rosnode list', (err, stdout, _stderr) => {
-    if (err) {
+  shell.exec('rosnode list', (err, stdout, stderr) => {
+    if (err || stdout.startsWith('ERROR') || stderr.startsWith('ERROR')) {
       console.error(err)
+      console.error(stdout)
+      console.error(stderr)
       return
     }
 
