@@ -50,6 +50,10 @@ export async function setup_ros(): Promise<void> {
     if (nh.isShutdown() && !shutdownCalledInternally) {
       clearInterval(id);
       ipcRenderer.send('shutdown')
+    } else if (nh.isShutdown() && shutdownCalledInternally) {
+      setTimeout(() => {
+        shutdownCalledInternally = false
+      }, 1000)
     }
   }, 1000)
 
