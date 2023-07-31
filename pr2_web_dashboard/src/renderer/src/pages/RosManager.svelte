@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { rosInfo } from '../stores/ros.store'
+  import { rosInfo, shutdown_ros } from '../stores/ros.store'
   const shell = window.api.shell
 
   function rosmaster() {
     if ($rosInfo.running) {
+      shutdown_ros()
       shell.exec('rosnode kill -a && pkill ros')
       rosInfo.set({
         running: false,
@@ -22,7 +23,7 @@
 
   function teleop() {
     if ($rosInfo.teleop) {
-      shell.exec("rosnode kill /pr2_teleop_general_joystick")
+      shell.exec('rosnode kill /pr2_teleop_general_joystick')
 
       rosInfo.update((info) => {
         info.teleop = false
