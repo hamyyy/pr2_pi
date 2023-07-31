@@ -22,7 +22,7 @@ export function setup_ros(): void {
     })
   })
 
-  shell.exec('rosnode list', (err, stdout, stderr) => {
+  shell.exec('rosnode list', (err, stdout, _stderr) => {
     if (err) {
       console.error(err)
       return
