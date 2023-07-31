@@ -1,10 +1,12 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import ros from 'rosnodejs'
+import * as shell from 'child_process'
 
 // Custom APIs for renderer
 const api = {
-  ros: ros,
+  ros,
+  shell,
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

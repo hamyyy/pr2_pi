@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, screen } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -16,7 +16,7 @@ function createWindow(): void {
       sandbox: false,
       contextIsolation: false,
     },
-    // fullscreen: true,
+    fullscreen: screen.getPrimaryDisplay().bounds.width <= 800,
   })
 
   mainWindow.on('ready-to-show', () => {
