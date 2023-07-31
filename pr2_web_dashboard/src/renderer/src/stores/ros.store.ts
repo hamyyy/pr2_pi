@@ -14,7 +14,7 @@ const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
 const ipcRenderer: Electron.IpcRenderer = (window as any).api.ipcRenderer
 
-export async function setup_ros(): void {
+export async function setup_ros(): Promise<void> {
   await ros.initNode('/pr2_web_dashboard')
   const nh = ros.nodeHandle
 
