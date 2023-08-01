@@ -23,6 +23,7 @@
     <img class="battery" src={BatteryDead} alt="" />
     <div class="battery-bar" style="width: {divWidth}px;" />
     {#if charging}
+      <img class="battery-charge-outline" src={BatteryCharge} alt="" />
       <img class="battery-charge" src={BatteryCharge} alt="" />
     {/if}
   </div>
@@ -66,7 +67,21 @@
   }
 
   .battery-charge {
+    scale: 0.8;
     filter: invert(86%) sepia(49%) saturate(6435%) hue-rotate(353deg) brightness(105%) contrast(91%);
+  }
+  
+  .battery-charge-outline {
+    scale: 0.8;
+    -webkit-filter: drop-shadow(1px 1px 0 var(--background-color))
+      drop-shadow(-1px 1px 0 var(--background-color))
+      drop-shadow(1px -1px 0 var(--background-color))
+      drop-shadow(-1px -1px 0 var(--background-color));
+
+    filter: drop-shadow(1px 1px 0 var(--background-color))
+      drop-shadow(-1px 1px 0 var(--background-color))
+      drop-shadow(1px -1px 0 var(--background-color))
+      drop-shadow(-1px -1px 0 var(--background-color));
   }
 
   @media (prefers-color-scheme: dark) {

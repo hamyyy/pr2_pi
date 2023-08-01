@@ -18,7 +18,7 @@
     background-color: transparent;
     border-color: transparent;
     outline: transparent;
-    height: 40vh;
+    // height: 40vh;
   }
 
   img {

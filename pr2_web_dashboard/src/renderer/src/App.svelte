@@ -1,7 +1,6 @@
 <script lang="ts">
   import { setup_ros, shutdown_ros } from './stores/ros.store'
   import { onDestroy, onMount } from 'svelte'
-  import ArrowButton from './components/ArrowButton.svelte'
 
   import PageManager from './pages/PageManager.svelte'
   import BatteryMonitor from './pages/BatteryMonitor.svelte'
@@ -15,22 +14,30 @@
     shutdown_ros()
   })
 
-  let page = 0
-  let pages = [RosManager, BatteryMonitor]
+  let pages = [
+    {
+      title: 'ROS Manager',
+      component: RosManager
+    },
+    {
+      title: 'Battery Monitor',
+      component: BatteryMonitor
+    }
+  ]
 </script>
 
 <main>
-  <ArrowButton direction="left" on:click={() => page--} disabled={page == 0} />
-  <PageManager {page} {pages} />
-  <ArrowButton direction="right" on:click={() => page++} disabled={page == pages.length - 1} />
+  <PageManager {pages} />
 </main>
 
-<style>
+<style lang="scss">
   main {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     height: 100vh;
+
+    overflow: hidden; // Remove this if you want scrolling content
   }
 </style>

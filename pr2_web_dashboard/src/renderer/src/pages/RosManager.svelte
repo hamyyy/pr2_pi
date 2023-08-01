@@ -43,15 +43,25 @@
 </script>
 
 <main>
-  <h1>ROS</h1>
-  <h2>ROS Master {$rosInfo.running ? 'Running' : 'Stopped'}</h2>
+  <h2>
+    ROS Master <span
+      style="color: {$rosInfo.running ? 'var(--success-color)' : 'var(--danger-color)'}"
+      >{$rosInfo.running ? 'Running' : 'Stopped'}</span
+    >
+  </h2>
 
   <div style="flex: 1" />
 
   <div class="button-container">
     <button on:click={() => location.reload()}>Refresh</button>
-    <button on:click={rosmaster}>{$rosInfo.running ? 'Stop' : 'Start'} ROS Master</button>
-    <button on:click={teleop}>{$rosInfo.teleop ? 'Stop' : 'Start'} Teleop</button>
+    <button class={$rosInfo.running ? 'danger' : 'success'} on:click={rosmaster}
+      >{$rosInfo.running ? 'Stop' : 'Start'} ROS Master</button
+    >
+    <button
+      class={$rosInfo.teleop ? 'warning' : 'success'}
+      on:click={teleop}
+      disabled={!$rosInfo.running}>{$rosInfo.teleop ? 'Stop' : 'Start'} Teleop</button
+    >
   </div>
 </main>
 
@@ -75,6 +85,7 @@
 
     button {
       font-size: 2rem;
+      width: 100%;
     }
   }
 </style>

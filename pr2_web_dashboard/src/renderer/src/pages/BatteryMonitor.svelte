@@ -6,7 +6,6 @@
 </script>
 
 <main>
-  <h1>Battery Monitor</h1>
   <div class="battery-server-container">
     {#each batteryBays as batteryBay}
       <div class="battery-server">
@@ -24,9 +23,9 @@
   main {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
   }
 
   .battery-server {
