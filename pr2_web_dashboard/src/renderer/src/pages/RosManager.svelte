@@ -43,25 +43,42 @@
 </script>
 
 <main>
-  <h2>
-    ROS Master <span
-      style="color: {$rosInfo.running ? 'var(--success-color)' : 'var(--danger-color)'}"
-      >{$rosInfo.running ? 'Running' : 'Stopped'}</span
-    >
-  </h2>
+  <h3>
+    ROS Master
+    <span class={$rosInfo.running ? 'text-success' : 'text-error'}>
+      {$rosInfo.running ? 'Running' : 'Stopped'}
+    </span>
+  </h3>
 
-  <div style="flex: 1" />
+  <div style="flex: 1;" />
 
   <div class="button-container">
-    <button on:click={() => location.reload()}>Refresh</button>
-    <button class={$rosInfo.running ? 'danger' : 'success'} on:click={rosmaster}
-      >{$rosInfo.running ? 'Stop' : 'Start'} ROS Master</button
-    >
     <button
-      class={$rosInfo.teleop ? 'warning' : 'success'}
-      on:click={teleop}
-      disabled={!$rosInfo.running}>{$rosInfo.teleop ? 'Stop' : 'Start'} Teleop</button
+      class="btn {$rosInfo.running
+        ? 'bg-error text-error-content'
+        : 'bg-success text-success-content'}"
+      on:click={rosmaster}
     >
+      <h3>
+        {$rosInfo.running ? 'Stop' : 'Start'} ROS Master
+      </h3>
+    </button>
+
+    <button
+      class="btn {$rosInfo.teleop
+        ? 'bg-warning text-warning-content'
+        : 'bg-success text-success-content'} "
+      on:click={teleop}
+      disabled={!$rosInfo.running}
+    >
+      <h3>
+        {$rosInfo.teleop ? 'Stop' : 'Start'} Teleop
+      </h3>
+    </button>
+
+    <button class="btn" on:click={() => location.reload()}>
+      <h3>Refresh App</h3>
+    </button>
   </div>
 </main>
 

@@ -2,53 +2,27 @@
   import BatteryIndicator from '../components/BatteryIndicator.svelte'
   import { batteryInfo } from '../stores/ros.store'
 
+  const positions = ['Top Right', 'Bottom Right', 'Top Left', 'Bottom Left']
+
   $: batteryBays = $batteryInfo
 </script>
 
-<main>
-  <div class="battery-server-container">
-    {#each batteryBays as batteryBay}
-      <div class="battery-server">
-        {#each batteryBay.battery ?? [] as battery}
-          <div class="battery-container">
-            <BatteryIndicator {battery} {batteryBay} />
-          </div>
+<main class="flex flex-col justify-center items-center h-full w-full py-8 px-8">
+  <div class="flex flex-row justify-center items-center gap-16 w-full">
+    {#each batteryBays as batteryBay, i}
+      <div class="flex flex-col justify-center items-center gap-1 flex-1">
+        <h4 class="mb-4">{positions[i]}</h4>
+        {#each batteryBay.battery ?? [false, false, false, false] as battery}
+          {#if battery === false}
+            <BatteryIndicator waiting />
+          {:else}
+            <div class="battery-container">
+              <BatteryIndicator {battery} />
+            </div>
+          {/if}
         {/each}
+        <span>Average: {batteryBay?.average_charge ?? '???'}%</span>
       </div>
     {/each}
   </div>
 </main>
-
-<style lang="scss">
-  main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-
-  .battery-server {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .battery-server-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-  }
-
-  .battery-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  }
-</style>

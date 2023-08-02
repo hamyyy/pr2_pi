@@ -27,8 +27,8 @@
   }
 </script>
 
-<main>
-  <div class="header">
+<main class="overflow-hidden h-screen flex-1 flex flex-col">
+  <div class="flex flex-row justify-between items-center w-full border-b border-b-gray-500">
     <ArrowButton direction="left" on:click={() => (prevPage = page--)} disabled={page == 0} />
     <h1>{pages[page].title}</h1>
     <ArrowButton
@@ -39,9 +39,10 @@
   </div>
 
   {#if pages.length > 0}
-    <div class="content-container">
+    <div class="flex flex-row justify-center relative flex-grow w-full overflow-hidden overflow-y-auto">
       {#key page}
         <div
+          class="flex w-full"
           in:swipe={{ page, prevPage, direction: 'in' }}
           out:swipe={{ page, prevPage, direction: 'out' }}
         >
@@ -55,32 +56,3 @@
     </div>
   {/if}
 </main>
-
-<style lang="scss">
-  main {
-    flex: 1;
-
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 100%;
-
-    border-bottom: 1px solid var(--text-color);
-  }
-
-  .content-container {
-    position: relative;
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-  }
-</style>
