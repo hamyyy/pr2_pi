@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { rosInfo, shutdown_ros } from '../stores/ros.store'
+  import { rosInfo, shutdownROS } from '../stores/ros.store'
   const shell = window.api.shell
 
   function rosmaster() {
     if ($rosInfo.running) {
-      shutdown_ros()
+      shutdownROS()
       shell.exec('rosnode kill -a && pkill ros')
       rosInfo.set({
         running: false,
@@ -54,7 +54,7 @@
 
   <div class="button-container">
     <button
-      class="btn {$rosInfo.running
+      class="btn btn-lg {$rosInfo.running
         ? 'bg-error text-error-content'
         : 'bg-success text-success-content'}"
       on:click={rosmaster}
@@ -65,7 +65,7 @@
     </button>
 
     <button
-      class="btn {$rosInfo.teleop
+      class="btn btn-lg {$rosInfo.teleop
         ? 'bg-warning text-warning-content'
         : 'bg-success text-success-content'} "
       on:click={teleop}
@@ -76,7 +76,7 @@
       </h3>
     </button>
 
-    <button class="btn" on:click={() => location.reload()}>
+    <button class="btn btn-lg" on:click={() => location.reload()}>
       <h3>Refresh App</h3>
     </button>
   </div>

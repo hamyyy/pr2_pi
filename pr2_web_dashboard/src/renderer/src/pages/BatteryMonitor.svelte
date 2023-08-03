@@ -11,7 +11,7 @@
   <div class="flex flex-row justify-center items-center gap-16 w-full">
     {#each batteryBays as batteryBay, i}
       <div class="flex flex-col justify-center items-center gap-1 flex-1">
-        <h4 class="mb-4">{positions[i]}</h4>
+        <h5 class="mb-4">{positions[i]}</h5>
         {#each batteryBay.battery ?? [false, false, false, false] as battery}
           {#if battery === false}
             <BatteryIndicator waiting />
@@ -21,7 +21,7 @@
             </div>
           {/if}
         {/each}
-        <span>Average: {batteryBay?.average_charge ?? '???'}%</span>
+        <h5>Average: {batteryBay?.average_charge ?? '???'}%</h5>
       </div>
     {/each}
   </div>

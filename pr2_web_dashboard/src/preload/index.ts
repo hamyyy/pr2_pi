@@ -2,12 +2,14 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import ros from 'rosnodejs'
 import * as shell from 'child_process'
+import * as sys from 'systeminformation'
 
 // Custom APIs for renderer
 const api = {
   ros,
   shell,
-  ipcRenderer
+  ipcRenderer,
+  sys
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

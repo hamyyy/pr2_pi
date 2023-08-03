@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setup_ros, shutdown_ros } from './stores/ros.store'
+  import { setupROS, shutdownROS } from './stores/ros.store'
   import { onDestroy, onMount } from 'svelte'
   import { themeChange } from 'theme-change'
 
@@ -7,14 +7,17 @@
   import BatteryMonitor from './pages/BatteryMonitor.svelte'
   import RosManager from './pages/RosManager.svelte'
   import AppSettings from './pages/AppSettings.svelte'
+  import { startStstemInfoUpdate, stopSystemInfoUpdate } from './stores/sys.store'
 
   onMount(() => {
     themeChange(false)
-    setup_ros()
+    setupROS()
+    startStstemInfoUpdate()
   })
 
   onDestroy(() => {
-    shutdown_ros()
+    shutdownROS()
+    stopSystemInfoUpdate()
   })
 
   let pages = [

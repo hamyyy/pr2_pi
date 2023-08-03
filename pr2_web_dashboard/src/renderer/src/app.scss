@@ -22,6 +22,11 @@ h4 {
   @apply font-bold;
 }
 
+h5 {
+  @apply text-lg;
+  @apply font-bold;
+}
+
 * {
   user-select: none;
   -webkit-user-drag: none;

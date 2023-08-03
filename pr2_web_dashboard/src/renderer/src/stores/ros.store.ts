@@ -14,7 +14,7 @@ const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
 const ipcRenderer: Electron.IpcRenderer = (window as any).api.ipcRenderer
 
-export async function setup_ros(): Promise<void> {
+export async function setupROS(): Promise<void> {
   await ros.initNode('/pr2_web_dashboard')
   const nh = ros.nodeHandle
 
@@ -62,7 +62,7 @@ export async function setup_ros(): Promise<void> {
 
 }
 
-export function shutdown_ros(): void {
+export function shutdownROS(): void {
   shutdownCalledInternally = true
   ros.shutdown()
 }

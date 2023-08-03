@@ -1,6 +1,9 @@
 <script lang="ts">
   import { expoOut } from 'svelte/easing'
   import ArrowButton from '../components/ArrowButton.svelte'
+  import CpuTemp from '../components/CpuTemp.svelte'
+  import CpuLoad from '../components/CpuLoad.svelte'
+  import OverallBatteryIndicator from '../components/OverallBatteryIndicator.svelte'
 
   export let page: number = 0
   export let pages
@@ -28,9 +31,17 @@
 </script>
 
 <main class="overflow-hidden h-screen flex-1 flex flex-col">
-  <div class="flex flex-row justify-between items-center w-full border-b border-b-gray-500">
+  <div class="flex flex-row justify-between items-center w-full border-b border-b-gray-500 gap-4">
     <ArrowButton direction="left" on:click={() => (prevPage = page--)} disabled={page == 0} />
     <h1>{pages[page].title}</h1>
+    <div class="flex-1 flex flex-row justify-around items-center gap-4">
+      <div class="flex flex-row gap-2">
+        <h5>CPU:</h5>
+        <CpuLoad />
+        <CpuTemp />
+      </div>
+      <OverallBatteryIndicator />
+    </div>
     <ArrowButton
       direction="right"
       on:click={() => (prevPage = page++)}
@@ -39,7 +50,9 @@
   </div>
 
   {#if pages.length > 0}
-    <div class="flex flex-row justify-center relative flex-grow w-full overflow-hidden overflow-y-auto">
+    <div
+      class="flex flex-row justify-center relative flex-grow w-full overflow-hidden overflow-y-auto"
+    >
       {#key page}
         <div
           class="flex w-full"
