@@ -1,7 +1,7 @@
 <script lang="ts">
   import { systemInfo } from '../stores/sys.store'
 
-  $: temp = $systemInfo?.cpuTemperature ?? '???'
+  $: temp = Math.floor($systemInfo?.cpuTemperature) ?? '?'
 </script>
 
 <h5>
