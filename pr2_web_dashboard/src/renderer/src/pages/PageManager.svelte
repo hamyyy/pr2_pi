@@ -31,11 +31,11 @@
 </script>
 
 <main class="overflow-hidden h-screen flex-1 flex flex-col">
-  <div class="flex flex-row justify-between items-center w-full border-b border-b-gray-500 gap-4">
+  <div class="flex flex-row justify-between items-center w-full border-b border-b-gray-500">
     <ArrowButton direction="left" on:click={() => (prevPage = page--)} disabled={page == 0} />
-    <h1>{pages[page].title}</h1>
+    <h1 class="whitespace-nowrap">{pages[page].title}</h1>
     <div class="flex-1 flex flex-row justify-around items-center gap-4">
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-row gap-2 flex-nowrap whitespace-nowrap">
         <h5>CPU:</h5>
         <CpuLoad />
         <CpuTemp />

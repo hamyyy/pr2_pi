@@ -4,6 +4,14 @@ import { writable } from 'svelte/store'
 
 let shutdownCalledInternally = false;
 
+export enum LogLevel {
+  DEBUG = 1,
+  INFO = 2,
+  WARN = 4,
+  ERROR = 8,
+  FATAL = 16
+}
+
 export const batteryInfo = writable<any[]>([{}, {}, {}, {}])
 export const rosInfo = writable({
   running: false,
@@ -23,6 +31,26 @@ export async function setupROS(): Promise<void> {
       info[msg.id] = msg;
       return info
     })
+  })
+
+  nh.subscribe('/rosout', 'rosgraph_msgs/Log', (msg: any) => {
+    switch (msg.level) {
+      case LogLevel.DEBUG:
+        console.debug(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.INFO:
+        console.info(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.WARN:
+        console.warn(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.ERROR:
+        console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.FATAL:
+        console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+    }
   })
 
   shell.exec('rosnode list', (err, stdout, stderr) => {
