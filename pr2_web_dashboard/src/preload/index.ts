@@ -9,7 +9,8 @@ const api = {
   ros,
   shell,
   ipcRenderer,
-  sys
+  sys,
+  process
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

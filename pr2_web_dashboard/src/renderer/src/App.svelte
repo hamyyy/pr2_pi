@@ -8,11 +8,14 @@
   import RosManager from './pages/RosManager.svelte'
   import AppSettings from './pages/AppSettings.svelte'
   import { startStstemInfoUpdate, stopSystemInfoUpdate } from './stores/sys.store'
+  import DemoPage from './pages/DemoPage.svelte'
+  import { scanForDemos } from './stores/ros-demos.store'
 
-  onMount(() => {
+  onMount(async () => {
     themeChange(false)
     setupROS()
     startStstemInfoUpdate()
+    scanForDemos()
   })
 
   onDestroy(() => {
@@ -24,6 +27,10 @@
     {
       title: 'ROS Manager',
       component: RosManager
+    },
+    {
+      title: 'Demo Page',
+      component: DemoPage
     },
     {
       title: 'Battery Monitor',

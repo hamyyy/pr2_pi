@@ -10,11 +10,10 @@
         running: false,
         teleop: false
       })
-      shell.exec(`ssh pr2@10.68.0.1 "pkill ros"`)
+      shell.exec(`ssh pr2@c1 "pkill ros"`)
     } else {
-      shell.exec(
-        `ssh pr2@10.68.0.1 "source /opt/ros/noetic/setup.bash && source /home/pr2/pr2_ws/devel/setup.bash && export ROS_ENV_LOADER=/opt/ros/noetic/env.sh && roslaunch ~/pr2_bringup.launch"`
-      )
+      shell.exec(`ssh pr2@c1 -t "source ~/.profile && roslaunch ~/pr2_bringup.launch"`)
+
       setTimeout(() => {
         location.reload()
       }, 2000)
@@ -31,7 +30,7 @@
       })
     } else {
       shell.exec(
-        `ssh pr2@10.68.0.1 "source /opt/ros/noetic/setup.bash && source /home/pr2/pr2_ws/devel/setup.bash && export ROS_ENV_LOADER=/opt/ros/noetic/env.sh && roslaunch pr2_teleop_general pr2_teleop_general_joystick.launch"`
+        `ssh pr2@c1  "source ~/.profile && roslaunch pr2_teleop_general pr2_teleop_general_joystick.launch"`
       )
 
       rosInfo.update((info) => {
@@ -50,24 +49,18 @@
     </span>
   </h3>
 
-  <div style="flex: 1;" />
-
-  <div class="button-container">
+  <div class="button-container flex-1">
     <button
-      class="btn btn-lg {$rosInfo.running
-        ? 'bg-error text-error-content'
-        : 'bg-success text-success-content'}"
+      class="btn btn-lg {$rosInfo.running ? 'btn-error' : 'btn-success'}"
       on:click={rosmaster}
     >
       <h3>
-        {$rosInfo.running ? 'Stop' : 'Start'} ROS Master
+        {$rosInfo.running ? 'Stop' : 'Start'} PR2
       </h3>
     </button>
 
     <button
-      class="btn btn-lg {$rosInfo.teleop
-        ? 'bg-warning text-warning-content'
-        : 'bg-success text-success-content'} "
+      class="btn btn-lg {$rosInfo.teleop ? 'btn-error' : 'btn-success'} "
       on:click={teleop}
       disabled={!$rosInfo.running}
     >
@@ -76,7 +69,7 @@
       </h3>
     </button>
 
-    <button class="btn btn-lg" on:click={() => location.reload()}>
+    <button class="btn btn-lg btn-outline" on:click={() => location.reload()}>
       <h3>Refresh App</h3>
     </button>
   </div>

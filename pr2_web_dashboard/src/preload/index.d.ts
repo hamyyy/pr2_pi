@@ -9,7 +9,8 @@ declare global {
     api: {
       ros: typeof rosnodejs,
       shell: typeof shell
-      sys: typeof sys
+      sys: typeof sys,
+      process: typeof process
     }
   }
 }
