@@ -1,8 +1,6 @@
-import type rosnodejs from 'rosnodejs'
 import type * as Shell from 'child_process'
 import { get, writable, type Writable } from "svelte/store";
 
-const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
 
 export type ROSDemo = {
