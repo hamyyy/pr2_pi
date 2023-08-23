@@ -72,11 +72,11 @@
         </button>
       </div>
 
-      <hr />
+      <hr class="mb-2" />
       <p class="text-lg">
-        Simply place a <code class="bg-base-200 text-base-content px-2 py-1 rounded">.launch</code>
+        Simply place a <code class="bg-base-300 text-base-content px-2 py-1 rounded">.launch</code>
         file to
-        <code class="bg-base-200 text-base-content px-2 py-1 rounded">~/pr2pi_shared/</code>
+        <code class="bg-base-300 text-base-content px-2 py-1 rounded">~/pr2pi_shared/</code>
         on either C1 or C2 (you may need to ssh into C1 or C2)
       </p>
 
