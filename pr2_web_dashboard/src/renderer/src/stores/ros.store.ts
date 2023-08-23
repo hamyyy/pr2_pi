@@ -17,6 +17,10 @@ export const rosInfo = writable({
   running: false,
   teleop: false,
 })
+export const logs = writable<{
+  message: string,
+  level: LogLevel
+}[]>([])
 
 const ros: typeof rosnodejs = (window as any).api.ros
 const shell: typeof Shell = (window as any).api.shell
@@ -53,6 +57,18 @@ export async function setupROS(): Promise<void> {
         console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
         break;
     }
+
+    logs.update(logs => {
+      logs.push({
+        message: msg.msg,
+        level: msg.level
+      })
+
+      if (logs.length > 100) {
+        logs.shift()
+      }
+      return logs
+    });
   })
 
   shell.exec('rosnode list', (err, stdout, stderr) => {

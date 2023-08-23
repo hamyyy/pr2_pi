@@ -10,6 +10,7 @@
   import { startStstemInfoUpdate, stopSystemInfoUpdate } from './stores/sys.store'
   import DemoPage from './pages/DemoPage.svelte'
   import { scanForDemos } from './stores/ros-demos.store'
+  import LogsPage from './pages/LogsPage.svelte'
 
   onMount(async () => {
     themeChange(false)
@@ -35,6 +36,10 @@
     {
       title: 'Battery Monitor',
       component: BatteryMonitor
+    },
+    {
+      title: 'ROS Logs',
+      component: LogsPage
     },
     {
       title: 'App Settings',
