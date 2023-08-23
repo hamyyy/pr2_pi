@@ -26,6 +26,8 @@ export async function setupROS(): Promise<void> {
   await ros.initNode('/pr2_web_dashboard')
   const nh = ros.nodeHandle
 
+  await new Promise<void>((res) => setTimeout(res, 1000))
+
   nh.subscribe('/battery/server2', 'pr2_msgs/BatteryServer2', (msg: any) => {
     batteryInfo.update(info => {
       info[msg.id] = msg;
@@ -33,25 +35,25 @@ export async function setupROS(): Promise<void> {
     })
   })
 
-  // nh.subscribe('/rosout', 'rosgraph_msgs/Log', (msg: any) => {
-  //   switch (msg.level) {
-  //     case LogLevel.DEBUG:
-  //       console.debug(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
-  //       break;
-  //     case LogLevel.INFO:
-  //       console.info(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
-  //       break;
-  //     case LogLevel.WARN:
-  //       console.warn(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
-  //       break;
-  //     case LogLevel.ERROR:
-  //       console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
-  //       break;
-  //     case LogLevel.FATAL:
-  //       console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
-  //       break;
-  //   }
-  // })
+  nh.subscribe('/rosout', 'rosgraph_msgs/Log', (msg: any) => {
+    switch (msg.level) {
+      case LogLevel.DEBUG:
+        console.debug(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.INFO:
+        console.info(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.WARN:
+        console.warn(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.ERROR:
+        console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+      case LogLevel.FATAL:
+        console.error(`[${LogLevel[msg.level]}] [${msg.name}] ${msg.msg}`);
+        break;
+    }
+  })
 
   shell.exec('rosnode list', (err, stdout, stderr) => {
     if (err || stdout.startsWith('ERROR') || stderr.startsWith('ERROR')) {
