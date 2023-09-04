@@ -4,12 +4,13 @@ import { writable } from 'svelte/store'
 
 let shutdownCalledInternally = false;
 
-export enum LogLevel {
-  DEBUG = 1,
-  INFO = 2,
-  WARN = 4,
-  ERROR = 8,
-  FATAL = 16
+export enum LogLevel { // values from "bunyan" package
+  TRACE = 10,
+  DEBUG = 20,
+  INFO = 30,
+  WARN = 40,
+  ERROR = 50,
+  FATAL = 60,
 }
 
 export const batteryInfo = writable<any[]>([{}, {}, {}, {}])
@@ -27,7 +28,11 @@ const shell: typeof Shell = (window as any).api.shell
 const ipcRenderer: Electron.IpcRenderer = (window as any).api.ipcRenderer
 
 export async function setupROS(): Promise<void> {
-  await ros.initNode('/pr2_web_dashboard')
+  await ros.initNode('/pr2_web_dashboard', {
+    logging: {
+      level: LogLevel.INFO
+    }
+  })
   const nh = ros.nodeHandle
 
   await new Promise<void>((res) => setTimeout(res, 1000))
